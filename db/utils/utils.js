@@ -1,8 +1,8 @@
-exports.formatDates = list => {
-    const arrayWithDatesFormatted = list.map(function(item) {
-        const formattedDate = new Date(item.created_at);
-        item.created_at = formattedDate;
-        return item;
+exports.formatDates = articlesArray => {
+    const arrayWithDatesFormatted = articlesArray.map(articleObj => {
+        const formattedDate = new Date(articleObj.created_at);
+        articleObj.created_at = formattedDate;
+        return articleObj;
     }); 
     // console.log(arrayWithDatesFormatted);
     return arrayWithDatesFormatted;
@@ -27,6 +27,6 @@ exports.formatComments = (comments, articleRef) => {
         newComment.body = comment.body;    
         return newComment;
     });
-    console.log(formattedComments)
+    // console.log(formattedComments)
     return formattedComments;
 };

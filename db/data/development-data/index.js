@@ -10,4 +10,4 @@ const data = {
     commentData: comments
 };
 
-module.exports = data[ENV];
+module.exports = data;
