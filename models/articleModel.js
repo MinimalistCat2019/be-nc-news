@@ -1,7 +1,6 @@
 const connection = require("../db/connection");
 
 const getArticleByArticleId = article_id => {
-  // console.log(article_id)
   return connection
     .select("*")
     .from("articles")
@@ -18,10 +17,7 @@ const getArticleByArticleId = article_id => {
 };
 
 const getNewVoteById = (article_id, votesBody) => {
-//   console.log(votesAdj);
-//   console.log(article_id);
    const votesAdj = votesBody.inc_votes;
-
   return connection("articles")
     .where({ article_id: article_id })
     .increment("votes", votesAdj)

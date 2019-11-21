@@ -1,8 +1,15 @@
 You are now connected to database "nc_news" as user "pfwilson".
-   slug   |               description               
-----------+-----------------------------------------
- coding   | Code is love, code is life
- football | FOOTIE!
- cooking  | Hey good looking, what you got cooking?
-(3 rows)
+ comment_id |    author    | article_id | votes |         created_at         |                                                                                                                                                   body                                                                                                                                                   
+------------+--------------+------------+-------+----------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+          3 | grumpy19     |          3 |     3 | 2017-08-31 13:51:40.263+01 | Qui sunt sit voluptas repellendus sed. Voluptatem et repellat fugiat. Rerum doloribus eveniet quidem vero aut sint officiis. Dolor facere et et architecto vero qui et perferendis dolorem. Magni quis ratione adipisci error assumenda ut. Id rerum eos facere sit nihil ipsam officia aspernatur odio.
+         28 | grumpy19     |          3 |     2 | 2016-07-30 03:25:35.163+01 | Dolorem excepturi quaerat. Earum dolor sapiente aut.
+         51 | grumpy19     |          3 |    -3 | 2016-11-14 04:48:59.407+00 | Eius dolor ipsa eaque qui sed accusantium est tenetur omnis. Eligendi necessitatibus sunt voluptate occaecati et quis consequuntur aut. Maxime nihil ut quia culpa.
+        112 | grumpy19     |          3 |    11 | 2016-06-13 23:26:49.171+01 | Voluptatem ipsam doloremque voluptate debitis voluptas nam non delectus rem. Et dicta assumenda dignissimos sed ea. Odit perspiciatis dicta consequatur aut facere in. Accusamus qui laudantium tenetur reprehenderit sed et velit iusto. Illo nihil voluptas rerum.
+        142 | tickle122    |          3 |     2 | 2016-09-16 08:15:56.338+01 | Dolor et eos. Earum suscipit est quia aut et qui voluptate. Et dolore necessitatibus asperiores qui perferendis. Adipisci rerum quod commodi ut omnis qui. Officiis maxime cum maxime expedita officia quisquam.
+        145 | jessjelly    |          3 |    10 | 2017-02-06 13:01:38.993+00 | Odit aut error. Occaecati et qui. Quam nam aut dolorem.
+        167 | grumpy19     |          3 |    19 | 2017-06-25 05:40:26.046+01 | Deleniti itaque et est unde autem. Labore illo commodi quaerat natus fugiat adipisci. Adipisci unde recusandae aliquam suscipit ipsum.
+        192 | jessjelly    |          3 |     3 | 2016-04-29 13:19:54.692+01 | Blanditiis aut a. Ipsum iusto quam quos veritatis repellendus nostrum. Sequi quis culpa.
+        200 | jessjelly    |          3 |    -1 | 2016-02-21 18:41:09.757+00 | Fugiat aut ipsam ea commodi natus commodi officiis amet. Rerum quae error. Vel eum voluptates corrupti aperiam.
+        231 | happyamy2016 |          3 |    11 | 2016-11-30 01:22:54.754+00 | Consequatur inventore voluptatum hic qui magnam nulla rerum. Beatae sint sed qui iure in est. Quo quibusdam molestias autem animi repellendus at et. Voluptates maxime recusandae. Repudiandae qui nesciunt.
+(10 rows)
 

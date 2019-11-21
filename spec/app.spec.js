@@ -149,21 +149,67 @@ describe('/api', () => {
                 expect(res.body.comment.comment_id).to.equal(19);
             });
         })
-        it('POST:400 invalid property on request body', () => {
+        it('POST:400 no body or username', () => {
             return request(app)
-            .patch('/api/articles/1/comments')
-            .send({
-                username: 'gin_is_good', 
-                body: 'You can do this!',
-                loser: 'No no no no no no'
-            })
+            .post('/api/articles/1/comments')
+            .send({})
             .expect(400)
             .then(({ body }) => {
-                expect(body.msg).to.equal(`Invalid property on request body`);
+                expect(body.msg).to.equal(`Bad Request`);
             })
         });
-
+        it('POST:404 article_d does not exist', () => {
+            return request(app)
+            .post('/api/articles/1000/comments')
+            .send({
+                username: 'butter_bridge', 
+                body: 'Great article! Keep up the good work!'
+            })
+            .expect(404)
+            .then(({ body }) => {
+                expect(body.msg).to.equal(`Not Found`);
+            })
+        });
+        it('POST:404 username does not exist', () => {
+            return request(app)
+            .post('/api/articles/1/comments')
+            .send({username: 'Paula123', 
+            body: 'Great article! Keep up the good work!'})
+            .expect(404)
+            .then(({ body }) => {
+                expect(body.msg).to.equal(`Not Found`);
+            })
+        });
+        it('POST:400 invalid article id', () => {
+            return request(app)
+            .post('/api/articles/Paula123/comments')
+            .send({username: 'butter_bridge', 
+            body: 'Great article! Keep up the good work!'})
+            .expect(400)
+            .then(({ body }) => {
+                expect(body.msg).to.equal(`Bad Request`);
+            })
+        });
+        it('GET: 200, returns a status 200 and a comment object containing the comment', () => {
+            return request(app)
+            .get('/api/articles/1/comments')
+            .expect(200)
+            .then(({body}) => {
+                expect(body).to.be.an('array');
+                expect(body[0]).to.contain.keys({
+                    body: 'Great article! Keep up the good work!',
+                    author: 'butter_bridge',
+                    article_id: 1,
+                    comment_id: 2,
+                    votes: 14,
+                    created_at: '2019-11-21T16:54:21.870Z'
+                });
+                expect(body[0].article_id).to.equal(1);
+                expect(body[0].author).to.equal('butter_bridge');
+                expect(body[0].comment_id).to.equal(2);
+            });
+    
+        });
     });
-   
 });
 

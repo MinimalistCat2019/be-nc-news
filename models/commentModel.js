@@ -15,16 +15,30 @@ const getCommentToArticle = (article_id, tempComment) => {
    .into('comments')
    .returning('*')
    .then(comment => {
-      const numOfKeys = Object.keys(tempComment)
-      // if (numOfKeys.length > 2) {
-      //    return Promise.reject({
-      //      status: 400,
-      //      msg: `missing body`
-      //    });
-      //  }
-      return comment[0]
+      return comment[0];
    })
 }
 
+const getCommentsByArticleId = (article_id) => {
+   return connection('comments')
+      // .select('*')
+      // .from('comments')
+      .where({article_id: article_id})
+      .returning('*')
+      .then(comments => {
+         // console.log(tempComments)
+         // const comments = tempComments.map(tempComment => {
+         // let comment = {};
+         // comment.comment_id = tempComment.comment_id;
+         // comment.votes = tempComment.votes;
+         // comment.created_at = tempComment.created_at;
+         // comment.author = tempComment.username;
+         // comment.body = tempComment.body;
+         // return comment
+         // });
+         // console.log(comments)
+         return comments;
+      })
+}
 
-module.exports = {getCommentToArticle};
+module.exports = {getCommentToArticle, getCommentsByArticleId};
