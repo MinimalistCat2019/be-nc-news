@@ -1,5 +1,5 @@
 const topicsRouter = require('express').Router();
-const { sendAllTopics } = require('../controllers/controller');
+const { sendAllTopics } = require('../controllers/topicController');
 
 topicsRouter.route('/').get(sendAllTopics);
 
