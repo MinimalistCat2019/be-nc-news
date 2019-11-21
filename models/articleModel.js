@@ -17,9 +17,11 @@ const getArticleByArticleId = article_id => {
     });
 };
 
-const getNewVoteById = (article_id, votesAdj) => {
+const getNewVoteById = (article_id, votesBody) => {
 //   console.log(votesAdj);
 //   console.log(article_id);
+   const votesAdj = votesBody.inc_votes;
+
   return connection("articles")
     .where({ article_id: article_id })
     .increment("votes", votesAdj)
@@ -31,7 +33,7 @@ const getNewVoteById = (article_id, votesAdj) => {
            msg: 'No votes included in body'
          });
        } else {
-         const numOfKeys = Object.keys(req.params);
+         const numOfKeys = Object.keys(votesBody);
          if(numOfKeys.length > 1) {
             return Promise.reject({
               status: 400,

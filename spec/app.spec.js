@@ -116,7 +116,7 @@ describe('/api', () => {
                 expect(body.msg).to.equal(`No votes included in body`);
             })
         });
-        it.only('PATCH:400 for some other property on request body', () => {
+        it('PATCH:400 for some other property on request body', () => {
             return request(app)
             .patch('/api/articles/1')
             .send({inc_votes: 87, name: 'Paula'})
@@ -125,6 +125,44 @@ describe('/api', () => {
                 expect(body.msg).to.equal(`Invalid property on request body`);
             })
         });
+        it('POST: 202, returns a status 202 and a comment object containing the comment', () => {
+            return request(app)
+            .post('/api/articles/1/comments')
+            .send({
+                username: 'butter_bridge', 
+                body: 'Great article! Keep up the good work!'
+            })
+            .expect(202)
+            .then((res) => {
+                expect(res.body.comment.body).to.equal('Great article! Keep up the good work!');
+                expect(res.body.comment).to.be.an('object');
+                expect(res.body.comment).to.contain.keys({
+                    body: 'Great article! Keep up the good work!',
+                    author: 'butter_bridge',
+                    article_id: 1,
+                    comment_id: 19,
+                    votes: 0,
+                    created_at: '019-11-21T16:54:21.870Z'
+                });
+                expect(res.body.comment.article_id).to.equal(1);
+                expect(res.body.comment.author).to.equal('butter_bridge');
+                expect(res.body.comment.comment_id).to.equal(19);
+            });
+        })
+        it('POST:400 invalid property on request body', () => {
+            return request(app)
+            .patch('/api/articles/1/comments')
+            .send({
+                username: 'gin_is_good', 
+                body: 'You can do this!',
+                loser: 'No no no no no no'
+            })
+            .expect(400)
+            .then(({ body }) => {
+                expect(body.msg).to.equal(`Invalid property on request body`);
+            })
+        });
+
     });
    
 });
