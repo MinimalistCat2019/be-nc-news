@@ -20,27 +20,21 @@ const getCommentToArticle = (article_id, tempComment) => {
 }
 
 const getCommentsByArticleId = (article_id, userQuery) => {
-   console.log(userQuery);
-   console.log(article_id)
    return connection('comments')
       .select('*')
       .from('comments')
       .where({article_id: article_id})
-      .orderBy(userQuery.sort_by || 'created_at', userQuery.order || 'desc ')
+      .orderBy(userQuery.sort_by || 'created_at', userQuery.order || 'desc')
       .returning('*')
       .then(comments => {
-         // console.log(tempComments)
-         // const comments = tempComments.map(tempComment => {
-         // let comment = {};
-         // comment.comment_id = tempComment.comment_id;
-         // comment.votes = tempComment.votes;
-         // comment.created_at = tempComment.created_at;
-         // comment.author = tempComment.username;
-         // comment.body = tempComment.body;
-         // return comment
-         // });
-         // console.log(comments)
-         return comments;
+         console.log('in the model')
+        if (comments.length === 0) {
+            return Promise.reject({
+               status: 404,
+               msg: `No article exists for given article_id`
+            })
+         };
+            return comments
       })
 }
 

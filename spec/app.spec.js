@@ -161,7 +161,7 @@ describe('/api', () => {
                 expect(body.msg).to.equal(`Bad Request`);
             })
         });
-        it('POST:404 article_d does not exist', () => {
+        it('POST:404 article_id does not exist', () => {
             return request(app)
             .post('/api/articles/1000/comments')
             .send({
@@ -193,35 +193,14 @@ describe('/api', () => {
                 expect(body.msg).to.equal(`Bad Request`);
             })
         });
-        // it('GET: 200, returns a status 200 and a comment object containing the comment', () => {
-        //     return request(app)
-        //     .get('/api/articles/1/comments')
-        //     .expect(200)
-        //     .then(({body}) => {
-        //         expect(body).to.be.an('array');
-        //         expect(body[0]).to.contain.keys({
-        //             body: 'Great article! Keep up the good work!',
-        //             author: 'butter_bridge',
-        //             article_id: 1,
-        //             comment_id: 2,
-        //             votes: 14,
-        //             created_at: '2019-11-21T16:54:21.870Z'
-        //         });
-        //         expect(body[0].article_id).to.equal(1);
-        //         expect(body[0].author).to.equal('butter_bridge');
-        //         expect(body[0].comment_id).to.equal(2);
-        //     });
-        // });
         it('GET: 200, returns a status 200 and a comment object containing the comment', () => {
             return request(app)
             .get('/api/articles/1/comments')
-            .query({ sort_by: 'comment_id' ,
-        order: 'asc'})
-            .query()
             .expect(200)
             .then(({body}) => {
-                expect(body).to.be.an('array');
-                expect(body[0]).to.contain.keys({
+                expect(body.comments).to.be.sortedBy('created_at', {descending: true});
+                expect(body.comments).to.be.an('array');
+                expect(body.comments[0]).to.contain.keys({
                     body: 'Great article! Keep up the good work!',
                     author: 'butter_bridge',
                     article_id: 1,
@@ -229,11 +208,11 @@ describe('/api', () => {
                     votes: 14,
                     created_at: '2019-11-21T16:54:21.870Z'
                 });
-                expect(body[0].article_id).to.equal(1);
-                expect(body[0].author).to.equal('butter_bridge');    
+                expect(body.comments[0].article_id).to.equal(1);
+                expect(body.comments[0].author).to.equal('butter_bridge');    
             });
         });
-        it.only('GET 200 and returns comments in the order requested and sorted by requested column', () => {
+        it('GET 200 and returns comments in the order requested and sorted by requested column', () => {
             return request(app)
             // .get('api/articles/1/comments?sort_by=comment_id&&order_by=asc')
             .get('/api/articles/1/comments')
@@ -241,8 +220,34 @@ describe('/api', () => {
             .expect(200)
             .then(({body}) => {
                 expect(body.comments).to.be.sortedBy('comment_id', {descending: true})
+            });
+        });
+        // it.only('GET:404 article_id does not exist', () => {
+        //     return request(app)
+        //     .get('/api/articles/9999/comments')
+        //     .query({sort_by: "comment_id", order: "desc"})
+        //     .expect(404)
+        //     .then(({ body }) => {
+        //         expect(body.msg).to.equal(`Not Found`);
+        //     })
+        // });
+        it('GET:404 for a valid article_id that does not exist', () => {
+            return request(app)
+            .get('/api/articles/9999/comments')
+            .expect(404)
+            .then(({ body }) => {
+                expect(body.msg).to.equal(`No article exists for given article_id`);
             })
-        })
+        });
+        it('GET:400 for a bad request', () => {
+            return request(app)
+            .get('/api/articles/dog/comments')
+            .query({sort_by: "comment_id", order: "desc"})
+            .expect(400)
+            .then(({ body }) => {
+                expect(body.msg).to.equal(`Bad Request`);
+            })
+        });
     });
 });
 

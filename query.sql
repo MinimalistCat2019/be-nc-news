@@ -1,2 +1,2 @@
 \c nc_news_test
-SELECT * FROM comments WHERE article_id = 1 ORDER BY comment_id DESC
+SELECT * FROM articles LEFT JOIN comments ON articles.article_id = comments.article_id;

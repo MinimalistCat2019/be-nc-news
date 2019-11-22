@@ -22,17 +22,15 @@ exports.sendNewVoteById = (req, res, next) => {
     // console.log(votesAdj)
     getNewVoteById(article_id, votesBody)
         .then((article) => {
-            // console.log(article)
             res.status(202).send(article);
         })
         .catch(next)
 };
 
 exports.sendCommentToArticle = (req, res, next) => {
-    // console.log('in the article controller')  
     const { article_id } = req.params;
     const tempComment = req.body;
-    getCommentToArticle(article_id, tempComment, )
+    getCommentToArticle(article_id, tempComment)
         .then((comment) => {
             res.status(202).send({comment});
         })
@@ -40,15 +38,13 @@ exports.sendCommentToArticle = (req, res, next) => {
 }
 
 exports.sendCommentsFromArticle = (req, res, next) => {
-    // console.log('in the article controller')  
     const {article_id} = req.params;
     const userQuery = req.query;
-    console.log(userQuery)
+    
     getCommentsByArticleId(article_id, userQuery)
     .then((comments) => {
-        // console.log('in then of article controller',comments)
-        console.log(comments)
-        res.status(200).send(comments);
+        console.log('in the controller again')
+        res.status(200).send({comments});
     })
     .catch(next)
 }
