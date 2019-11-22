@@ -19,11 +19,14 @@ const getCommentToArticle = (article_id, tempComment) => {
    })
 }
 
-const getCommentsByArticleId = (article_id) => {
+const getCommentsByArticleId = (article_id, userQuery) => {
+   console.log(userQuery);
+   console.log(article_id)
    return connection('comments')
-      // .select('*')
-      // .from('comments')
+      .select('*')
+      .from('comments')
       .where({article_id: article_id})
+      .orderBy(userQuery.sort_by || 'created_at', userQuery.order || 'desc ')
       .returning('*')
       .then(comments => {
          // console.log(tempComments)

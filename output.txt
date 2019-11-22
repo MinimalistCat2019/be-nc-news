@@ -1,15 +1,18 @@
-You are now connected to database "nc_news" as user "pfwilson".
- comment_id |    author    | article_id | votes |         created_at         |                                                                                                                                                   body                                                                                                                                                   
-------------+--------------+------------+-------+----------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-          3 | grumpy19     |          3 |     3 | 2017-08-31 13:51:40.263+01 | Qui sunt sit voluptas repellendus sed. Voluptatem et repellat fugiat. Rerum doloribus eveniet quidem vero aut sint officiis. Dolor facere et et architecto vero qui et perferendis dolorem. Magni quis ratione adipisci error assumenda ut. Id rerum eos facere sit nihil ipsam officia aspernatur odio.
-         28 | grumpy19     |          3 |     2 | 2016-07-30 03:25:35.163+01 | Dolorem excepturi quaerat. Earum dolor sapiente aut.
-         51 | grumpy19     |          3 |    -3 | 2016-11-14 04:48:59.407+00 | Eius dolor ipsa eaque qui sed accusantium est tenetur omnis. Eligendi necessitatibus sunt voluptate occaecati et quis consequuntur aut. Maxime nihil ut quia culpa.
-        112 | grumpy19     |          3 |    11 | 2016-06-13 23:26:49.171+01 | Voluptatem ipsam doloremque voluptate debitis voluptas nam non delectus rem. Et dicta assumenda dignissimos sed ea. Odit perspiciatis dicta consequatur aut facere in. Accusamus qui laudantium tenetur reprehenderit sed et velit iusto. Illo nihil voluptas rerum.
-        142 | tickle122    |          3 |     2 | 2016-09-16 08:15:56.338+01 | Dolor et eos. Earum suscipit est quia aut et qui voluptate. Et dolore necessitatibus asperiores qui perferendis. Adipisci rerum quod commodi ut omnis qui. Officiis maxime cum maxime expedita officia quisquam.
-        145 | jessjelly    |          3 |    10 | 2017-02-06 13:01:38.993+00 | Odit aut error. Occaecati et qui. Quam nam aut dolorem.
-        167 | grumpy19     |          3 |    19 | 2017-06-25 05:40:26.046+01 | Deleniti itaque et est unde autem. Labore illo commodi quaerat natus fugiat adipisci. Adipisci unde recusandae aliquam suscipit ipsum.
-        192 | jessjelly    |          3 |     3 | 2016-04-29 13:19:54.692+01 | Blanditiis aut a. Ipsum iusto quam quos veritatis repellendus nostrum. Sequi quis culpa.
-        200 | jessjelly    |          3 |    -1 | 2016-02-21 18:41:09.757+00 | Fugiat aut ipsam ea commodi natus commodi officiis amet. Rerum quae error. Vel eum voluptates corrupti aperiam.
-        231 | happyamy2016 |          3 |    11 | 2016-11-30 01:22:54.754+00 | Consequatur inventore voluptatum hic qui magnam nulla rerum. Beatae sint sed qui iure in est. Quo quibusdam molestias autem animi repellendus at et. Voluptates maxime recusandae. Repudiandae qui nesciunt.
-(10 rows)
+You are now connected to database "nc_news_test" as user "pfwilson".
+ comment_id |    author     | article_id | votes |         created_at         |                                                                                         body                                                                                         
+------------+---------------+------------+-------+----------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+         18 | butter_bridge |          1 |    16 | 2000-11-26 12:36:03.389+00 | This morning, I showered for nine minutes.
+         13 | icellusedkars |          1 |     0 | 2005-11-25 12:36:03.389+00 | Fruit pastilles
+         12 | icellusedkars |          1 |     0 | 2006-11-25 12:36:03.389+00 | Massive intercranial brain haemorrhage
+         11 | icellusedkars |          1 |     0 | 2007-11-25 12:36:03.389+00 | Ambidextrous marsupial
+         10 | icellusedkars |          1 |     0 | 2008-11-24 12:36:03.389+00 | git push origin master
+          9 | icellusedkars |          1 |     0 | 2009-11-24 12:36:03.389+00 | Superficially charming
+          8 | icellusedkars |          1 |     0 | 2010-11-24 12:36:03.389+00 | Delicious crackerbreads
+          7 | icellusedkars |          1 |     0 | 2011-11-24 12:36:03.389+00 | Lobster pot
+          6 | icellusedkars |          1 |     0 | 2012-11-23 12:36:03.389+00 | I hate streaming eyes even more
+          5 | icellusedkars |          1 |     0 | 2013-11-23 12:36:03.389+00 | I hate streaming noses
+          4 | icellusedkars |          1 |  -100 | 2014-11-23 12:36:03.389+00 |  I carry a log — yes. Is it funny to you? It is not to me.
+          3 | icellusedkars |          1 |   100 | 2015-11-23 12:36:03.389+00 | Replacing the quiet elegance of the dark suit and tie with the casual indifference of these muted earth tones is a form of fashion suicide, but, uh, call me crazy — onyou it works.
+          2 | butter_bridge |          1 |    14 | 2016-11-22 12:36:03.389+00 | The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.
+(13 rows)
 

@@ -42,9 +42,12 @@ exports.sendCommentToArticle = (req, res, next) => {
 exports.sendCommentsFromArticle = (req, res, next) => {
     // console.log('in the article controller')  
     const {article_id} = req.params;
-    getCommentsByArticleId(article_id)
+    const userQuery = req.query;
+    console.log(userQuery)
+    getCommentsByArticleId(article_id, userQuery)
     .then((comments) => {
         // console.log('in then of article controller',comments)
+        console.log(comments)
         res.status(200).send(comments);
     })
     .catch(next)
