@@ -1,8 +1,10 @@
 exports.formatDates = articlesArray => {
     const arrayWithDatesFormatted = articlesArray.map(articleObj => {
+        const newArticleObj = {...articleObj}
         const formattedDate = new Date(articleObj.created_at);
-        articleObj.created_at = formattedDate;
-        return articleObj;
+        newArticleObj.created_at = formattedDate;
+
+        return newArticleObj;
     }); 
     // console.log(arrayWithDatesFormatted);
     return arrayWithDatesFormatted;
@@ -17,7 +19,6 @@ exports.makeRefObj = list => {
 };
 
 exports.formatComments = (comments, articleRef) => {
-    if (comments.length === 0) return [];
     const formattedComments = comments.map(comment => {
         let newComment = {};
         newComment.author = comment.created_by;
@@ -27,6 +28,5 @@ exports.formatComments = (comments, articleRef) => {
         newComment.body = comment.body;    
         return newComment;
     });
-    // console.log(formattedComments)
     return formattedComments;
 };

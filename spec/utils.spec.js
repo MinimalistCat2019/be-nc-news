@@ -13,6 +13,23 @@ describe('formatDates', () => {
     expect(actual).to.deep.equal(expected);
     expect(actual).to.not.equal(inputArray);
   });
+  it('does not mutate the inputted objects', () => {
+    let inputArray = [{
+      title: 'Living in the shadow of a great man',
+      topic: 'mitch',
+      author: 'butter_bridge',
+      body: 'I find this existence challenging',
+      votes: 100,
+    }];
+    formatDates(inputArray);
+    expect(inputArray).to.deep.equal([{
+      title: 'Living in the shadow of a great man',
+      topic: 'mitch',
+      author: 'butter_bridge',
+      body: 'I find this existence challenging',
+      votes: 100,
+    }])
+  });
   it('returns an array with a single object containing a created at value in format of a javascript date object when passed an array containing a single object with a created at value as a timestamp', () => {
     let inputArray = [{
       title: 'Living in the shadow of a great man',
@@ -140,6 +157,26 @@ describe('formatComments', () => {
     const inputArray = [];
     const actual = formatComments(inputArray);
     const expected = [];
+    expect(actual).to.deep.equal(expected);
+    expect(actual).to.not.equal(inputArray);
+  });
+  it('returns an array containing one object when passed an array containing an object and a reference object', () => {
+    const inputArray = [{
+      body: 'This is a bad article name',
+      belongs_to: 'A',
+      created_by: 'butter_bridge',
+      votes: 1,
+      created_at: 1038314163389
+    },];
+    const fakeRefObj = {'A': 3, "They're not exactly dogs, are they?": 1, 'Living in the shadow of a great man': 2 }
+    const actual = formatComments(inputArray, fakeRefObj);
+    const expected = [{
+      body: 'This is a bad article name',
+      article_id: 3,
+      author: 'butter_bridge',
+      votes: 1,
+      created_at: new Date(1038314163389)
+    }];
     expect(actual).to.deep.equal(expected);
     expect(actual).to.not.equal(inputArray);
   });

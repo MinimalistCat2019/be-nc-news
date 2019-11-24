@@ -1,28 +1,38 @@
-const { getArticleByArticleId, getNewVoteById } = require('../models/articleModel');
-const { getCommentToArticle, getCommentsByArticleId } = require('../models/commentModel');
+const { getArticleByArticleId, getNewVoteById, getAllArticles, getCommentToArticle, getCommentsByArticleId } = require('../models/articleModel');
+const {checkArticle_Id_Exists} = require('../helperFunctions')
 
 exports.sendArticleByArticleId = (req, res, next) => {
-    // console.log('in the article controller')
     const {article_id} = req.params;
     getArticleByArticleId(article_id)
         .then((article) => {
-            res.status(200).send(article[0]);
+            res.status(200).send({article});
         })
         .catch(next)
-//         // use the following code to check that the error message is coming through
-        // .catch((err) => {
-        //     console.log(err)
-        //     next(err);
-        // });
 };
+
+exports.sendAllArticles = (req, res, next) => {
+    const {sort_by, order, author, topic} = req.query;
+
+    getAllArticles(sort_by, order, author, topic)
+        .then(articles => {
+            if (articles.length === 0) {
+                return Promise.reject({
+                  status: 404,
+                  msg: "Not Found"
+                });
+              }
+            res.status(200).send({ articles })
+        })
+        .catch(next)
+    }
 
 exports.sendNewVoteById = (req, res, next) => {
     const { article_id } = req.params;
-    const votesBody = req.body;
+    const inc_votes = req.body;
     // console.log(votesAdj)
-    getNewVoteById(article_id, votesBody)
+    getNewVoteById(article_id, inc_votes)
         .then((article) => {
-            res.status(202).send(article);
+            res.status(200).send({article});
         })
         .catch(next)
 };
@@ -30,9 +40,10 @@ exports.sendNewVoteById = (req, res, next) => {
 exports.sendCommentToArticle = (req, res, next) => {
     const { article_id } = req.params;
     const tempComment = req.body;
+
     getCommentToArticle(article_id, tempComment)
         .then((comment) => {
-            res.status(202).send({comment});
+            res.status(201).send({comment});
         })
         .catch(next)
 }
@@ -40,11 +51,15 @@ exports.sendCommentToArticle = (req, res, next) => {
 exports.sendCommentsFromArticle = (req, res, next) => {
     const {article_id} = req.params;
     const userQuery = req.query;
+    // console.log(userQuery)
+    // console.log(req.query)
+    console.log(article_id)
+    const doesArticleIdExist = checkArticle_Id_Exists
     
     getCommentsByArticleId(article_id, userQuery)
-    .then((comments) => {
-        console.log('in the controller again')
+    .then(comments => {
         res.status(200).send({comments});
     })
     .catch(next)
 }
+

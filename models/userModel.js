@@ -1,7 +1,6 @@
 const connection = require('../db/connection');
 
 const getUserByUsername = (username) => {
-   // console.log("in the userModel")
    return connection.select('*').from('users').where({username: username})
    .then(user => {
       if (user.length === 0) {
@@ -9,7 +8,7 @@ const getUserByUsername = (username) => {
                status: 404,
                msg: `No user found for username: ${username}`
          });
-      } return user;
+      } return user[0];
    })
    
 };

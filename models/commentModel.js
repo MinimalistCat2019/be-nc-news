@@ -1,41 +1,28 @@
 const connection = require('../db/connection');
 
-const getCommentToArticle = (article_id, tempComment) => {
-   // console.log("in the commentModel")
-  
-   let comment = {};
-   comment.author = tempComment.username;
-   comment.body = tempComment.body;
-   comment.article_id = article_id;
-   // console.log(comment.body)
-
-   return connection('comments')
-   .where({ article_id: article_id })
-   .insert(comment)
-   .into('comments')
-   .returning('*')
-   .then(comment => {
-      return comment[0];
-   })
+const getVoteForComment = (comment_id, inc_votes = 0) => {
+    console.log('in the comments model')
+    return connection
+        .select('*')
+        .from('comments')
+        .where('comment_id', comment_id)
+        .increment('votes', inc_votes)
+        .returning('*')
+        .then(comment => {
+            if (comment.length < 1) {
+                return Promise.reject({status: 404, msg: 'Not Found'});
+            } else return comment;
+        })
 }
 
-const getCommentsByArticleId = (article_id, userQuery) => {
-   return connection('comments')
-      .select('*')
-      .from('comments')
-      .where({article_id: article_id})
-      .orderBy(userQuery.sort_by || 'created_at', userQuery.order || 'desc')
-      .returning('*')
-      .then(comments => {
-         console.log('in the model')
-        if (comments.length === 0) {
-            return Promise.reject({
-               status: 404,
-               msg: `No article exists for given article_id`
-            })
-         };
+const deleteComment = (comment_id) => {
+    return connection
+        .from('comments')
+        .where('comment_id', comment_id)
+        .del()
+        .then(comments => {
             return comments
-      })
+        })
 }
 
-module.exports = {getCommentToArticle, getCommentsByArticleId};
+module.exports = {getVoteForComment, deleteComment}
