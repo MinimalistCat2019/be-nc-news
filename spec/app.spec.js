@@ -448,23 +448,22 @@ describe('/api', () => {
                     expect(body.comments).to.be.sortedBy('votes', {ascending: true})
                 });
             });
-            // it('GET 200 and returns an empty array because no comments have been posted for the passed article_id', () => {
-                //     return request(app)
-                //     // .get('api/articles/1/comments?sort_by=comment_id&&order_by=asc')
-                //     .get('/api/articles/2/comments')
-                //     .expect(200)
-                //     .then(({body}) => {
-                    //         expect(body.comments).to.deep.equal([]);
-                    //     });
-                    // });
-                    it('GET:404 for a valid article_id that does not exist', () => {
-                        return request(app)
-                        .get('/api/articles/9999/comments')
-                        .expect(404)
-                        .then(({ body }) => {
-                            expect(body.msg).to.equal(`No article exists for given article_id`);
-                        })
+            it('GET 200 and returns an empty array because no comments have been posted for the passed article_id', () => {
+                    return request(app)
+                    .get('/api/articles/2/comments')
+                    .expect(200)
+                    .then(({body}) => {
+                        expect(body.comments.length).to.equal(0);
+                        });
                     });
+                    // it('GET:404 for a valid article_id that does not exist', () => {
+                    //     return request(app)
+                    //     .get('/api/articles/9999/comments')
+                    //     .expect(404)
+                    //     .then(({ body }) => {
+                    //         expect(body.msg).to.equal(`No article exists for given article_id`);
+                    //     })
+                    // });
                     it('GET:400 for a bad request', () => {
                         return request(app)
                         .get('/api/articles/dog/comments')
@@ -533,7 +532,6 @@ describe('/api', () => {
                           });
                     });
                   });
-            
             });
 
         // });

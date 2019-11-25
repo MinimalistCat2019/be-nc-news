@@ -20,8 +20,12 @@ const deleteComment = (comment_id) => {
         .from('comments')
         .where('comment_id', comment_id)
         .del()
-        .then(comments => {
-            return comments
+        .then(comment => {
+            if (comment === 0) {
+                return Promise.reject({status: 404, msg: 'Not Found'})
+            } else if (comment === 1) {
+            return comment
+            }
         })
 }
 

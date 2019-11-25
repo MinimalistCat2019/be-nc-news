@@ -1,4 +1,5 @@
 const connection = require("../db/connection");
+const {checkArticle_Id_Exists, checkIfTopicOrAuthorExist} = require('../helperFunctions')
 
 const getArticleByArticleId = article_id => {
   return connection
@@ -30,6 +31,14 @@ const getAllArticles = (sort_by = 'created_at', order = 'desc', author, topic) =
       .groupBy('articles.article_id')
       .orderBy(sort_by, order)
       .returning('*')
+      .then(articles => {
+        if (articles.length === 0) {
+          return Promise.reject({
+            status: 404,
+            msg: "Not Found"
+          });
+        } else return articles;
+      })
   }  
   if (author) {
     return connection
@@ -41,6 +50,14 @@ const getAllArticles = (sort_by = 'created_at', order = 'desc', author, topic) =
       .groupBy('articles.article_id')
       .orderBy(sort_by, order)
       .returning('*')
+      .then(articles => {
+        if (articles.length === 0) {
+          return Promise.reject({
+            status: 404,
+            msg: "Not Found"
+          });
+        } return articles
+      })
   } 
   if (!topic && !author) {
     return connection 
@@ -51,24 +68,16 @@ const getAllArticles = (sort_by = 'created_at', order = 'desc', author, topic) =
       .groupBy('articles.article_id')
       .orderBy(sort_by, order)
       .returning('*')
+      .then(articles => {
+        if (articles.length === 0) {
+          return Promise.reject({
+            status: 404,
+            msg: "Not Found"
+          });
+        } return articles
+      })
   } 
 }
-//   return connection('articles')
-//   .select('*')
-//   .from('articles')
-//   .groupBy()
-//   .orderBy(userQuery.sort_by || 'created_at', userQuery.order || 'desc',)
-//   .returning('*')
-//   .then(articles => {
-//     if (articles.length === 0) {
-//       return Promise.reject({
-//         status: 404,
-//         msg: `No articles exist`
-//       })
-//     };
-//       return articles
-//    });
-// }
 
 const getNewVoteById = (article_id, votesBody) => {
    const votesAdj = votesBody.inc_votes;
@@ -116,12 +125,18 @@ const getCommentsByArticleId = (article_id, userQuery) => {
   .orderBy(userQuery.sort_by || 'created_at', userQuery.order || 'desc')
   .returning('*')
   .then(comments => {
-    if (comments.length === 0) {
+    const doesArticleIdExist = checkArticle_Id_Exists(article_id);
+    console.log(doesArticleIdExist)
+    console.log(comments)
+    if (doesArticleIdExist && (comments.length === 0)) {
+      return comments;
+      } 
+    else if ((comments.length === 0) && !doesArticleIdExist) {
       return Promise.reject({
         status: 404,
         msg: `No article exists for given article_id`
-      })
-    };
+    }); 
+   } else 
       return comments
    });
 }
