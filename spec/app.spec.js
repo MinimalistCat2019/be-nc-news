@@ -121,15 +121,15 @@ describe('/api', () => {
             });
         });
         // THIS SECTION is for if an author or topic exists but has no articles. Should respond with 200 but get an empty array
-        // it('GET:200, returns an empty array when articles for a topic that does exist, but has no articles is requested ', () => {
-        //     return request(app)
-        //     .get('/api/articles?author=lurker')
-        //     .expect(200)
-        //     .then(({ body }) => {
-        //         expect(body.articles).to.deep.equal([]);
-        //         expect(body.articles.length).to.equal(0)
-        //     });
-        // });
+        it('GET:200, returns an empty array when articles for a topic that does exist, but has no articles is requested ', () => {
+            return request(app)
+            .get('/api/articles?author=lurker')
+            .expect(200)
+            .then(({ body }) => {
+                expect(body.articles).to.deep.equal([]);
+                expect(body.articles.length).to.equal(0)
+            });
+        });
         it('GET:200, returns an array containing articles of only the given topic, sorted by votes, in ascending order', () => {
             return request(app)
             .get('/api/articles/?topic=mitch&sorted_by=votes&order=asc')
@@ -456,14 +456,14 @@ describe('/api', () => {
                         expect(body.comments.length).to.equal(0);
                         });
                     });
-                    // it('GET:404 for a valid article_id that does not exist', () => {
-                    //     return request(app)
-                    //     .get('/api/articles/9999/comments')
-                    //     .expect(404)
-                    //     .then(({ body }) => {
-                    //         expect(body.msg).to.equal(`No article exists for given article_id`);
-                    //     })
-                    // });
+            it('GET:404 for a valid article_id that does not exist', () => {
+                return request(app)
+                        .get('/api/articles/9999/comments')
+                        .expect(404)
+                        .then(({ body }) => {
+                            expect(body.msg).to.equal(`No article exists for given article_id`);
+                        })
+                    });
                     it('GET:400 for a bad request', () => {
                         return request(app)
                         .get('/api/articles/dog/comments')

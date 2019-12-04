@@ -20,7 +20,12 @@ const getArticleByArticleId = article_id => {
     });
 };
 
+
+
+
 const getAllArticles = (sort_by = 'created_at', order = 'desc', author, topic) => {
+
+  
   if (topic) {
     return connection
       .select('articles.*')
@@ -118,27 +123,26 @@ const getCommentToArticle = (article_id, tempComment) => {
 }
 
 const getCommentsByArticleId = (article_id, userQuery) => {
-  return connection('comments')
+  const getComments = connection('comments')
   .select('*')
   .from('comments')
   .where({article_id: article_id})
   .orderBy(userQuery.sort_by || 'created_at', userQuery.order || 'desc')
   .returning('*')
-  .then(comments => {
-    const doesArticleIdExist = checkArticle_Id_Exists(article_id);
-    console.log(doesArticleIdExist)
-    console.log(comments)
-    if (doesArticleIdExist && (comments.length === 0)) {
-      return comments;
-      } 
-    else if ((comments.length === 0) && !doesArticleIdExist) {
-      return Promise.reject({
-        status: 404,
-        msg: `No article exists for given article_id`
-    }); 
-   } else 
-      return comments
-   });
+  const doesArticleIdExist = checkArticle_Id_Exists(article_id);
+  return Promise.all([getComments,doesArticleIdExist ])
+  .then((array) => {
+    return array[0]
+  })
 }
 
+// const getAllArticles = (sort_by = 'created_at', order = 'desc', author, topic) => {
+//   const getArticles = connection('articles')
+//   .select('*')
+//   .from('articles')
+//   .modify()
+//   }
+
+
 module.exports = { getArticleByArticleId, getNewVoteById, getAllArticles, getCommentToArticle, getCommentsByArticleId  };
+

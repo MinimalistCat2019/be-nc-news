@@ -7,24 +7,43 @@ const checkArticle_Id_Exists = (article_id) => {
     .where('article_id', article_id)
     .then((articles) => {
       if (articles.length === 0) {
-        return false
-      } else if(articles.length > 0) return true;
+        return Promise.reject({
+          status: 404,
+          msg: `No article exists for given article_id`
+        }) 
+      } else return articles;
     })
-  };
+  }
    
 const checkIfTopicOrAuthorExist = (topic, author) => {
     if (author) {
       return connection
         .select("username")
         .from("users")
-        .where("username", author);
+        .where("username", author)
+        .then((users) => {
+          if (users.length === 0) {
+            return Promise.reject({
+              status: 404,
+              msg: 'No such author exists'
+            })
+          }
+        })
     }
     if (topic) {
       return connection
         .select("slug")
         .from("topics")
-        .where("slug", topic);
+        .where("slug", topic)
+        .then((topics) => {
+          if (topics.length === 0) {
+            return Promise.reject({
+              status: 404,
+              msg: 'No such topic exists'
+            })
+          }
+        })
     }
   };
   
-module.exports = { checkArticle_Id_Exists, checkIfTopicOrAuthorExist }
+module.exports = { checkArticle_Id_Exists, checkIfTopicOrAuthorExist} 
