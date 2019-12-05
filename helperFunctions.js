@@ -14,8 +14,8 @@ const checkArticle_Id_Exists = (article_id) => {
       } else return articles;
     })
   }
-   
-const checkIfTopicOrAuthorExist = (topic, author) => {
+
+const checkIfTopicOrAuthorExist = ({author, topic}) => {
     if (author) {
       return connection
         .select("username")
@@ -44,6 +44,16 @@ const checkIfTopicOrAuthorExist = (topic, author) => {
           }
         })
     }
+    // look at this section!!!!! 
+    // return connection
+    // .select('*')
+    // .from('articles')
+    // .modify((query) => {
+    //   console.log(query)
+    //   if(author) query.where({author})
+    //   if (topic) query.where({topic});
+    // })
+    
   };
   
 module.exports = { checkArticle_Id_Exists, checkIfTopicOrAuthorExist} 

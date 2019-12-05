@@ -1,52 +1,58 @@
-const { getArticleByArticleId, getNewVoteById, getAllArticles, getCommentToArticle, getCommentsByArticleId } = require('../models/articleModel');
-const {checkArticle_Id_Exists} = require('../helperFunctions')
+const {
+  getArticleByArticleId,
+  getNewVoteById,
+  getAllArticles,
+  getCommentToArticle,
+  getCommentsByArticleId
+} = require("../models/articleModel");
+const { checkArticle_Id_Exists } = require("../helperFunctions");
 
 exports.sendArticleByArticleId = (req, res, next) => {
-    const {article_id} = req.params;
-    getArticleByArticleId(article_id)
-        .then((article) => {
-            res.status(200).send({article});
-        })
-        .catch(next)
+  const { article_id } = req.params;
+  getArticleByArticleId(article_id)
+    .then(article => {
+      res.status(200).send({ article });
+    })
+    .catch(next);
 };
 
 exports.sendAllArticles = (req, res, next) => {
-    const {sort_by, order, author, topic} = req.query;
-
-    getAllArticles(sort_by, order, author, topic)
-        .then(articles => {
-            res.status(200).send({ articles })
-        })
-        .catch(next)
-    }
+  //const { sort_by, order, author, topic } = req.query;
+  console.log("in controllers");
+  getAllArticles(req.query)
+    .then(articles => {
+      console.log("back in controllers");
+      res.status(200).send({ articles });
+    })
+    .catch(next);
+};
 
 exports.sendNewVoteById = (req, res, next) => {
-    const { article_id } = req.params;
-    const inc_votes = req.body;
-    getNewVoteById(article_id, inc_votes)
-        .then((article) => {
-            res.status(200).send({article});
-        })
-        .catch(next)
+  const { article_id } = req.params;
+  const inc_votes = req.body;
+  getNewVoteById(article_id, inc_votes)
+    .then(article => {
+      res.status(200).send({ article });
+    })
+    .catch(next);
 };
 
 exports.sendCommentToArticle = (req, res, next) => {
-    const { article_id } = req.params;
-    const tempComment = req.body;
-    getCommentToArticle(article_id, tempComment)
-        .then((comment) => {
-            res.status(201).send({comment});
-        })
-        .catch(next)
-}
+  const { article_id } = req.params;
+  const tempComment = req.body;
+  getCommentToArticle(article_id, tempComment)
+    .then(comment => {
+      res.status(201).send({ comment });
+    })
+    .catch(next);
+};
 
 exports.sendCommentsFromArticle = (req, res, next) => {
-    const {article_id} = req.params;
-    const userQuery = req.query;
-    getCommentsByArticleId(article_id, userQuery)
+  const { article_id } = req.params;
+  const userQuery = req.query;
+  getCommentsByArticleId(article_id, userQuery)
     .then(comments => {
-        res.status(200).send({comments});
+      res.status(200).send({ comments });
     })
-    .catch(next)
-}
-
+    .catch(next);
+};

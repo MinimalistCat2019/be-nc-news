@@ -501,7 +501,7 @@ describe('/api', () => {
                           });
                         });
                     });
-                    it('PATCH:404 returns error message when  article_id does not exist', () => {
+                    it('PATCH:404 returns error message when article_id does not exist', () => {
                       return request(app)
                         .patch('/api/comments/9999')
                         .send({ inc_votes: 14 })
