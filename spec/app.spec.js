@@ -58,7 +58,7 @@ describe('/api', () => {
         });
     });
     
-    describe('/api/articles', () => {
+    describe.only('/api/articles', () => {
         it('GET:200, returns an object with a key of articles, containing an array', () => {
             return request(app)
             .get('/api/articles')
