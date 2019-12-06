@@ -17,9 +17,10 @@ exports.sendArticleByArticleId = (req, res, next) => {
 };
 
 exports.sendAllArticles = (req, res, next) => {
-  //const { sort_by, order, author, topic } = req.query;
+  console.log(req.query)
   getAllArticles(req.query)
     .then(articles => {
+      console.log('back in article Controller')
       res.status(200).send({ articles });
     })
     .catch(next);

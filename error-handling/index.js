@@ -9,7 +9,8 @@ exports.handlePsqlErrors = (err, req, res, next) => {
     "22P02": {status: 400, msg: "Bad Request"}, 
     "23502": {status: 400, msg: "Bad Request"},
     "23503": {status: 404, msg: "Not Found"},
-    "42601": {status: 400, msg: "Bad Request"}
+    "42601": {status: 400, msg: "Bad Request"},
+    "42703": {status: 400, msg: "No such column exists"}
   }
   const incomingError = psqlBadRequestCodes[err.code];
 

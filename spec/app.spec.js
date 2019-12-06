@@ -100,6 +100,14 @@ describe('/api', () => {
                 expect(body.articles).to.be.sortedBy('created_at', {descending: true});
             });
         });
+        it('GET:400, filters out invalid sort_by queries and provides an error message to the client', () => {
+            return request(app)
+            .get('/api/articles?sort_by=not-a-column')
+            .expect(400)
+            .then(({ body }) => {
+                expect(body.msg).to.equal(`No such column exists`);
+            });
+        });
         it('GET:200, accepts an author query of any author found in database', () => {
             return request(app)
             .get('/api/articles?author=butter_bridge')
@@ -430,6 +438,14 @@ describe('/api', () => {
                     expect(body.comments).to.be.sortedBy('created_at', {ascending: true})
                 });
             });
+            it('GET:400, filters out invalid sort_by queries and provides an error message to the client', () => {
+                return request(app)
+                .get('/api/articles/1/comments?sort_by=not-a-valid-column')
+                .expect(400)
+                .then(({ body }) => {
+                    expect(body.msg).to.equal(`No such column exists`);
+                })
+            })
             it('GET:200, returns array with length equal to number of comments for given article_id', () => {
                 return request(app)
                 .get('/api/articles/1/comments')

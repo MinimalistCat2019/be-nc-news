@@ -32,19 +32,23 @@ const getAllArticles = ({
   return checkIfTopicOrAuthorExist({author, topic})
   .then(() => {
     return connection
-      .select('articles.*')
-      .count({comment_count: 'comments.article_id'})
-      .from('articles')
-      .leftJoin('comments', 'articles.article_id', 'comments.article_id')
-      .groupBy('articles.article_id')
-      .orderBy(sort_by, order)
-      .modify(query => {
+    .select('articles.*')
+    .count({comment_count: 'comments.article_id'})
+    .from('articles')
+    .leftJoin('comments', 'articles.article_id', 'comments.article_id')
+    .groupBy('articles.article_id')
+    .orderBy(sort_by, order)
+    .modify(query => {
         if (author) query.where({ "articles.author": author });
         if (topic) query.where({ topic });
       })
   })
   .then(articles => {
-      return articles
+   
+      // if(req.params.sort_by !== 'article_id' || req.params.sort_by !== 'created_at' || req.params.sort_by !== 'author' || req.params.sort_by !== 'votes') {
+      //   return 
+      // }
+      return articles;
   })
 }
 
