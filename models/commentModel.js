@@ -1,7 +1,6 @@
 const connection = require('../db/connection');
 
 const getVoteForComment = (comment_id, inc_votes = 0) => {
-    console.log('in the comments model')
     return connection
         .select('*')
         .from('comments')

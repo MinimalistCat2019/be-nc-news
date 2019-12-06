@@ -58,7 +58,7 @@ describe('/api', () => {
         });
     });
     
-    describe.only('/api/articles', () => {
+    describe('/api/articles', () => {
         it('GET:200, returns an object with a key of articles, containing an array', () => {
             return request(app)
             .get('/api/articles')
@@ -170,7 +170,7 @@ describe('/api', () => {
               .get("/api/articles?topic=alexanderhamilton")
               .expect(404)
               .then(({ body }) => {
-                expect(body.msg).to.equal("Not Found");
+                expect(body.msg).to.equal("No such topic exists");
               });
           });
         });

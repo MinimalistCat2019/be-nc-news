@@ -29,36 +29,24 @@ const getAllArticles = ({
   author,
   topic
 }) => {
-  console.log("in model");
-  return (
-    connection
-      .select("*")
-      .from("articles")
+  return checkIfTopicOrAuthorExist({author, topic})
+  .then(() => {
+    return connection
+      .select('articles.*')
+      .count({comment_count: 'comments.article_id'})
+      .from('articles')
+      .leftJoin('comments', 'articles.article_id', 'comments.article_id')
+      .groupBy('articles.article_id')
+      .orderBy(sort_by, order)
       .modify(query => {
-        if (author) query.where({ author });
+        if (author) query.where({ "articles.author": author });
         if (topic) query.where({ topic });
       })
-      .orderBy(sort_by, order)
-      // .leftJoin("comments", "articles.article_id", "comments.article_id")
-      //.count({ comment_count: "comments.article_id" })
-      //.groupBy("articles.article_id")
-      // const doesTopicOrAuthorExist = checkIfTopicOrAuthorExist(author, topic);
-      // return Promise.all([getArticles,doesTopicOrAuthorExist])
-      .then(articles => {
-        if (articles.length === 0) {
-          if (!topic && !author) {
-          return Promise.reject({
-            status: 404,
-            msg: "Not Found"
-          });
-        }
-          if (topic && !author) {return articles;} 
-          if (author && !topic) {return articles;}
-      }   else return articles;
-    })
-  );
-};
-
+  })
+  .then(articles => {
+      return articles
+  })
+}
 
 
 const getNewVoteById = (article_id, votesBody) => {

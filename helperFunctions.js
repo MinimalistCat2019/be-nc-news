@@ -16,8 +16,10 @@ const checkArticle_Id_Exists = (article_id) => {
   }
 
 const checkIfTopicOrAuthorExist = ({author, topic}) => {
+  let doesAuthorExist;
+  let doesTopicExist;
     if (author) {
-      return connection
+       doesAuthorExist = connection
         .select("username")
         .from("users")
         .where("username", author)
@@ -26,34 +28,27 @@ const checkIfTopicOrAuthorExist = ({author, topic}) => {
             return Promise.reject({
               status: 404,
               msg: 'No such author exists'
-            })
+            });
           }
-        })
+        });
     }
+
     if (topic) {
-      return connection
+      doesTopicExist = connection
         .select("slug")
         .from("topics")
         .where("slug", topic)
         .then((topics) => {
           if (topics.length === 0) {
             return Promise.reject({
-              status: 404,
-              msg: 'No such topic exists'
-            })
-          }
-        })
+            status: 404,
+            msg: 'No such topic exists'
+          });
+        }
+      });
     }
-    // look at this section!!!!! 
-    // return connection
-    // .select('*')
-    // .from('articles')
-    // .modify((query) => {
-    //   console.log(query)
-    //   if(author) query.where({author})
-    //   if (topic) query.where({topic});
-    // })
-    
+  
+   return Promise.all([doesAuthorExist, doesTopicExist]);
   };
   
 module.exports = { checkArticle_Id_Exists, checkIfTopicOrAuthorExist} 
