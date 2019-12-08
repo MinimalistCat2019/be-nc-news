@@ -17,10 +17,8 @@ exports.sendArticleByArticleId = (req, res, next) => {
 };
 
 exports.sendAllArticles = (req, res, next) => {
-  console.log(req.query)
   getAllArticles(req.query)
     .then(articles => {
-      console.log('back in article Controller')
       res.status(200).send({ articles });
     })
     .catch(next);

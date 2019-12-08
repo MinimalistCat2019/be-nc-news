@@ -4,8 +4,7 @@ exports.sendVoteToComment = (req, res, next) => {
     const {comment_id} = req.params;
     const {inc_votes }= req.body;
     getVoteForComment(comment_id, inc_votes)
-        .then((response) => {
-            comment = response;
+        .then((comment) => {
             res.status(200).send({ comment });
         }) 
         .catch(next)
@@ -14,7 +13,7 @@ exports.sendVoteToComment = (req, res, next) => {
 exports.sendCommentForDelete = (req, res, next) => {
     const { comment_id } = req.params;
     deleteComment(comment_id)
-        .then(commentIdFound => {
+        .then(comment => {
             res.sendStatus(204);
         })
         .catch(next);

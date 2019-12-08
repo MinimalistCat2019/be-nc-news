@@ -7,10 +7,10 @@ const getVoteForComment = (comment_id, inc_votes = 0) => {
         .where('comment_id', comment_id)
         .increment('votes', inc_votes)
         .returning('*')
-        .then(comment => {
-            if (comment.length < 1) {
+        .then(comments => {
+            if (comments.length < 1) {
                 return Promise.reject({status: 404, msg: 'Not Found'});
-            } else return comment;
+            } else return comments[0];
         })
 }
 

@@ -128,7 +128,6 @@ describe('/api', () => {
                     );
             });
         });
-        // THIS SECTION is for if an author or topic exists but has no articles. Should respond with 200 but get an empty array
         it('GET:200, returns an empty array when articles for a topic that does exist, but has no articles is requested ', () => {
             return request(app)
             .get('/api/articles?author=lurker')
@@ -291,24 +290,15 @@ describe('/api', () => {
                     })
                 })
             })
-            // it('PATCH:400 for an invalid input on inc_votes', () => {
-            //     return request(app)
-            //     .patch('/api/articles/1')
-            //     .send({inc_votes: "cat"})
-            //     .expect(400)
-            //     .then(({ body }) => {
-            //         expect(body.msg).to.equal(`Bad Request`);
-            //     })
-            // });
-            // it('PATCH:400 for no inc_votes on request body', () => {
-            //     return request(app)
-            //     .patch('/api/articles/1')
-            //     .send({})
-            //     .expect(400)
-            //     .then(({ body }) => {
-            //         expect(body.msg).to.equal(`No votes included in body`);
-            //     })
-            // });
+            it('PATCH:400 for an invalid input on inc_votes', () => {
+                return request(app)
+                .patch('/api/articles/1')
+                .send({inc_votes: "cat"})
+                .expect(400)
+                .then(({ body }) => {
+                    expect(body.msg).to.equal(`Bad Request`);
+                })
+            });
             it('PATCH:400 for some other property on request body', () => {
                 return request(app)
                 .patch('/api/articles/1')
@@ -474,81 +464,116 @@ describe('/api', () => {
                     });
             it('GET:404 for a valid article_id that does not exist', () => {
                 return request(app)
-                        .get('/api/articles/9999/comments')
-                        .expect(404)
-                        .then(({ body }) => {
-                            expect(body.msg).to.equal(`No article exists for given article_id`);
-                        })
-                    });
-                    it('GET:400 for a bad request', () => {
-                        return request(app)
-                        .get('/api/articles/dog/comments')
-                        .query({sort_by: "comment_id", order: "desc"})
-                        .expect(400)
-                        .then(({ body }) => {
-                            expect(body.msg).to.equal(`Bad Request`);
-                        })
+                .get('/api/articles/9999/comments')
+                .expect(404)
+                .then(({ body }) => {
+                    expect(body.msg).to.equal(`No article exists for given article_id`);
+                });
+            });
+            it('GET:400 for a bad request', () => {
+                return request(app)
+                .get('/api/articles/dog/comments')
+                .query({sort_by: "comment_id", order: "desc"})
+                .expect(400)
+                .then(({ body }) => {
+                    expect(body.msg).to.equal(`Bad Request`);
                     });
                 });
-                describe('/api/comments', () => {
-                    it('PATCH:200 updates the vote count of a comment by amount speficied', () => {
-                      return request(app)
-                        .patch('/api/comments/1')
-                        .send({ inc_votes: 14 })
-                        .expect(200)
-                        .then(({ body }) => {
-                          expect(body.comment[0].votes).to.equal(30);
-                        });
-                    });
-                    it('PATCH 200 and returns an unaltered array and ignores additional keys', () => {
-                      return request(app)
-                        .patch('/api/comments/2')
-                        .send({ inc_votes: 14, we_are_done: 5 })
-                        .expect(200)
-                        .then(({ body }) => {
-                          expect(body.comment[0]).to.deep.equal({
-                            comment_id: 2,
-                            author: 'butter_bridge',
-                            article_id: 1,
-                            votes: 28,
-                            created_at: "2016-11-22T12:36:03.389Z",
-                            body:
-                              'The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.'
-                          });
-                        });
-                    });
-                    it('PATCH:404 returns error message when article_id does not exist', () => {
-                      return request(app)
-                        .patch('/api/comments/9999')
-                        .send({ inc_votes: 14 })
-                        .expect(404)
-                        .then(({ body }) => {
-                          expect(body.msg).to.equal('Not Found');
-                        });
-                    });
-                    it('DELETE:204 deletes the given comment', () => {
-                      return request(app)
-                        .delete('/api/comments/7')
-                        .expect(204);
-                    });
-                    it('DELETE:404, use a 404: Not Found when DELETE contains a valid comment_id that does not exist', () => {
-                        return request(app)
-                          .del('/api/comments/9876543')
-                          .expect(404)
-                          .then(({ body }) => {
-                            expect(body.msg).to.equal("Not Found");
-                          });
-                    });
-                    it('DELETE:400, responds with Bad Request when given an invalid id', () => {
-                        return request(app)
-                          .del('/api/comments/catsanddogs')
-                          .expect(400)
-                          .then(({ body }) => {
-                            expect(body.msg).to.equal('Bad Request');
-                          });
-                    });
-                  });
             });
+        describe('/api/comments', () => {
+            it('PATCH:200 updates the vote count of a comment by amount speficied', () => {
+                return request(app)
+                .patch('/api/comments/1')
+                .send({ inc_votes: 14 })
+                .expect(200)
+                .then(({ body }) => {
+                    expect(body.comment.votes).to.equal(30);
+                });
+            });
+            it('PATCH:200 returns an unchanged comment when no inc_votes is provided in the request body', () => {
+                    return request(app)
+                    .patch('/api/comments/1')
+                    .send({})
+                    .expect(200)
+                    .then(({body})=> {
+                        expect(body.comment).to.deep.equal({
+                            comment_id: 1,
+                            author: 'butter_bridge',
+                            article_id: 9,
+                            votes: 16,
+                            created_at: '2017-11-22T12:36:03.389Z',
+                            body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!"
+                        })
+                    })
+                }); 
+            it('PATCH 200 and returns an unaltered comment and ignores additional keys', () => {
+                return request(app)
+                .patch('/api/comments/2')
+                .send({ inc_votes: 14, we_are_done: 5 })
+                .expect(200)
+                .then(({ body }) => {
+                    expect(body.comment).to.deep.equal({
+                    comment_id: 2,
+                    author: 'butter_bridge',
+                    article_id: 1,
+                    votes: 28,
+                    created_at: "2016-11-22T12:36:03.389Z",
+                    body:
+                        'The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.'
+                    });
+                });
+            });
+            it('PATCH:404 returns error message when article_id does not exist', () => {
+                return request(app)
+                .patch('/api/comments/9999')
+                .send({ inc_votes: 14 })
+                .expect(404)
+                .then(({ body }) => {
+                    expect(body.msg).to.equal('Not Found');
+                });
+            });
+            it('DELETE:204 deletes the given comment', () => {
+                return request(app)
+                .delete('/api/comments/7')
+                .expect(204)
+            });
+            it('DELETE:404, use a 404: Not Found when DELETE contains a valid comment_id that does not exist', () => {
+                return request(app)
+                    .del('/api/comments/9876543')
+                    .expect(404)
+                    .then(({ body }) => {
+                    expect(body.msg).to.equal("Not Found");
+                    });
+            });
+            it('DELETE:400, responds with Bad Request when given an invalid id', () => {
+                return request(app)
+                    .del('/api/comments/catsanddogs')
+                    .expect(400)
+                    .then(({ body }) => {
+                    expect(body.msg).to.equal('Bad Request');
+                });
+            });
+        });
+        describe('DELETE /api', () => {
+            it('DELETE:405 and Method Not Allowed when client attempts to delete the api', () => {
+                return request(app).delete('/api')
+                .expect(405)
+                .then(({body}) => {
+                    expect(body.msg).to.equal('Method Not Allowed')
+                })
+            });
+          });
+        describe('GET /non-existent-route', () => {
+            it('GET: 404 when a request is sent to a non-existant route', () => {
+                return request(app)
+                .get('/api/gremlinsarethebest')
+                .expect(404)
+                .then(({body}) => {
+                    expect(body.msg).to.equal('Route not found')
+                })
+            });
+        });
+    });
 
         // });
             

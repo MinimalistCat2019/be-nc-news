@@ -44,10 +44,6 @@ const getAllArticles = ({
       })
   })
   .then(articles => {
-   
-      // if(req.params.sort_by !== 'article_id' || req.params.sort_by !== 'created_at' || req.params.sort_by !== 'author' || req.params.sort_by !== 'votes') {
-      //   return 
-      // }
       return articles;
   })
 }
@@ -103,13 +99,6 @@ const getCommentsByArticleId = (article_id, userQuery) => {
     return array[0];
   });
 };
-
-// const getAllArticles = (sort_by = 'created_at', order = 'desc', author, topic) => {
-//   const getArticles = connection('articles')
-//   .select('*')
-//   .from('articles')
-//   .modify()
-//   }
 
 module.exports = {
   getArticleByArticleId,
