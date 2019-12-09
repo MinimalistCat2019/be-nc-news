@@ -14,8 +14,4 @@ articlesRouter.route('/:article_id/comments').post(sendCommentToArticle).get(sen
     res.status(405).send({msg: 'Method Not Allowed'});
 });;
 
-// articlesRouter.use('/', () => {
-//     console.log('in the articles Router')
-// });
-
 module.exports = articlesRouter;

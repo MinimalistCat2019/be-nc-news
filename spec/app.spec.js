@@ -555,26 +555,16 @@ describe('/api', () => {
             });
         });
         describe('DELETE /api', () => {
-            it('DELETE:405 and Method Not Allowed when client attempts to delete the api', () => {
+            it('DELETE:405 and Method Not Found when client attempts to delete the api', () => {
                 return request(app).delete('/api')
                 .expect(405)
                 .then(({body}) => {
-                    expect(body.msg).to.equal('Method Not Allowed')
-                })
-            });
-          });
-        describe('GET /non-existent-route', () => {
-            it('GET: 404 when a request is sent to a non-existant route', () => {
-                return request(app)
-                .get('/api/gremlinsarethebest')
-                .expect(404)
-                .then(({body}) => {
-                    expect(body.msg).to.equal('Route not found')
+                    expect(body.msg).to.equal('Method Not Found')
                 })
             });
         });
-    });
+});
 
-        // });
+
             
             
