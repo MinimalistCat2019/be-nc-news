@@ -563,6 +563,15 @@ describe('/api', () => {
                 })
             });
         });
+        describe('GET /api', () => {
+            it('GET 200 and a json file describing all the available endpoints on the API', () => {
+                return request(app).get('/api')
+                .expect(200)
+                .then(({body}) => {
+                    expect(body).to.be.an('object')
+                })
+            });
+        });
 });
 
 

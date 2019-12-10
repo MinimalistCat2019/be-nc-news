@@ -3,6 +3,7 @@ const topicsRouter = require('./topicRouter');
 const usersRouter = require('./userRouter');
 const articlesRouter = require('./articleRouter');
 const commentsRouter = require('./commentRouter');
+const endpointsJSON = require('../controllers/apiController')
 
 // const handleMethodNotFound = require('../error-handling/index')
 
@@ -14,9 +15,9 @@ apiRouter.use('/comments', commentsRouter);
 // apiRouter.all((req, res, next) => {
 //     res.status(405).send({msg: 'Method Not Found'});
 // });
-apiRouter.route('/').all((req, res, next) => {
+apiRouter.route('/').get(endpointsJSON).all((req, res, next) => {
     res.status(405).send({msg: 'Method Not Found'});
 });
 // apiRouter.all(handleMethodNotFound)
 
-module.exports = apiRouter
+module.exports = apiRouter;
