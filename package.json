@@ -15,8 +15,7 @@
     "query": "psql -f query.sql > output.txt",
     "seed:prod": "NODE_ENV=production DB_URL=$(heroku config:get DATABASE_URL) knex seed:run",
     "migrate-latest:prod": "NODE_ENV=production DB_URL=$(heroku config:get DATABASE_URL) knex migrate:latest",
-    "migrate-rollback:prod": "NODE_ENV=production DB_URL=$(heroku config:get DATABASE_URL) knex migrate:rollback",
-    "start": "node listen.js"
+    "migrate-rollback:prod": "NODE_ENV=production DB_URL=$(heroku config:get DATABASE_URL) knex migrate:rollback"
   },
   "repository": {
     "type": "git",
@@ -39,5 +38,6 @@
     "chai": "^4.2.0",
     "mocha": "^6.2.2",
     "supertest": "^4.0.2"
-  }
+  },
+  "start": "node listen.js"
 }
