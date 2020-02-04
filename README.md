@@ -31,7 +31,7 @@ The project should now open in your code editor of choice, such as Visual Studio
 nstall the following dependencies globally:
 Node.JS
 NPM 
-PostreSQL
+PostgreSQL
 
 ### 3
 Install the following developer dependencies:
