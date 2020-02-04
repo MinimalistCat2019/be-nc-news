@@ -1,6 +1,6 @@
 # Northcoder News
 
-This is the back end of the Northcoder News api, a Reddit-style news aggregation site which allows users to read, vote and comment on articles.
+This is the back end of Northcoder News, a Reddit-style news aggregation site which allows users to read, vote and comment on articles.
 
 ## Background
 
