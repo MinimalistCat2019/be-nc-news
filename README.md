@@ -4,9 +4,9 @@ This is the back end of the Northcoder News api, a Reddit-style news aggregation
 
 ## Background
 
-We will be building the API to use in the Northcoders News Sprint during the Front End block of the course.
+This is a RESTful API designed to be used in the Northcoders News Sprint during the Front End block of the course.
 
-Your database will be PSQL, and you will interact with it using [Knex](https://knexjs.org).
+The database is PSQL, and the front end will interract with it using [Knex](https://knexjs.org).
 
 
 ### Hosted Api 
