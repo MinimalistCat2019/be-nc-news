@@ -1,10 +1,13 @@
 # Northcoder News
 
-This is the back end of Northcoder News, a Reddit-style news aggregation site which allows users to read, vote and comment on articles.
+This is the back end of the Northcoder News api, a Reddit-style news aggregation site which allows users to read, vote and comment on articles.
 
 ## Background
 
-This is the api I built to use in the Northcoders News Sprint during the Front End block of Northcoders.
+This is a RESTful API designed to be used in the Northcoders News Sprint during the Front End block of the course.
+
+The database is PSQL, and the front end will interract with it using [Knex](https://knexjs.org).
+
 
 ### Hosted Api 
 https://paula-nc-news.herokuapp.com/api
@@ -25,10 +28,10 @@ code .
 The project should now open in your code editor of choice, such as Visual Studio Code. 
 
 ### 2 
-Install the following dependencies globally:
+nstall the following dependencies globally:
 Node.JS
 NPM 
-PostgreSQL
+PostreSQL
 
 ### 3
 Install the following developer dependencies:
